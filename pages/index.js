@@ -9,10 +9,14 @@ import Styles from '../styles/Home.module.css'
 
 export default function Home() {
 
+  const fetcher = (url) => fetch(url).then((res) => res.json());
+
   let title = 'ともすた'
-  const {data, error} = useSWR('/api/message')
-  if(error) return <div>failed to load</div>
-  if(!data) return <div>loading...</div>
+
+   const { data, error } = useSWR('/api/message', fetcher)
+
+    if (error) return <div>failed to load</div>;
+    if (!data) return <div>loading...</div>;
 
   return (
     <Content>
@@ -21,6 +25,7 @@ export default function Home() {
       </Head>
       <Header title={title}/>
       <p>{data.message}</p>
+      
       <div>
         <Link href="/about">
           <button>About</button>
